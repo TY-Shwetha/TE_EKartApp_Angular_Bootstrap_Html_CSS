@@ -1,0 +1,89 @@
+<div id="err" class="alert alert-danger text-center" *ngIf="error">
+    {{error}}
+</div>
+<div  id="msg" class="alert -alert-success text-center" *ngIf="message">
+    {{message}}
+</div>
+<div class="text-center mt-5" *ngIf="isLoading">
+    <app-spinner></app-spinner>
+</div>
+
+<div class="wrapper">
+    <div class="row">
+        <div class="col-md-3" *ngFor="let product of products">
+            <div class="card">
+                <img [src]="product.productImageURL" [alt]="product.productName" height="150px" width="100%">
+                <div class="card-body">
+                    <div>
+                        {{product.productName}}
+                    </div>
+                </div>
+            </div>
+            <div class="card-footer">
+                <button type="submit" class="btn btn-warning mx-1" (click)="deleteProduct(product)">
+                    Delete
+                </button>
+                <button class="btn btn-primary" data-bs-toggle="modal"
+                    data-target="#updateProductModal" (click)="onEditProduct(product)">
+                    Update
+            </button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<!-- Modal -->
+<div  class="modal fade" id="updateProductModal" tabindex="-1" role="dialog"
+    aria-labelledby="updateProductModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button  type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+
+
+                <div class="col-md-8 offset-md-2 ">
+                    <form #editProductForm='ngForm' (ngSubmit)="onFormSubmit()" action=""
+                    *ngIf="selectedProductToEdit"
+                        class="action">
+                        <div class="card bord">
+                            <div class="card-header text-success text-center fw-bolder">Update Product</div>
+                            <div class="card-body">
+                                <div class="form-group">
+                                    <label for="productName">Product Name</label>
+                                    <input type="text" class="form-control mb-4" id="productName" name="productName"
+                                        [(ngModel)]="selectedProductToEdit.productName" ngModel #productName>
+                                </div>
+                                <div class="form-group">
+                                    <label for="productPrice">Product Price</label>
+                                    <input type="text" class="form-control mb-4" id="productPrice" name="productPrice"
+                                        ngModel #productPrice>
+                                </div>
+                                <div class="form-group">
+                                    <label for="productImageURL">Product Image URL</label>
+                                    <input type="text" class="form-control mb-4" id="productImageURL"
+                                        name="productImageURL" ngModel #productImageURL>
+                                </div>
+                                <div class="form-group">
+                                    <label for="productDescription">Description</label>
+                                    <input type="text" class="form-control mb-4" id="productDescription"
+                                        name="productDescription" ngModel #productDescription>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+
+            </div>
+            <div class="modal-footer">
+                <button  type="button" class="btn btn-secondary"
+                    data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary">Save changes</button>
+            </div>
+        </div>
+    </div>
+</div>
